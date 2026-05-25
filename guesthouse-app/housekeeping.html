@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Housekeeping Portal | Ndwandwe Estate</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="housekeeping.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="loading" class="loading-overlay">
+        <div class="spinner"></div>
+        <p style="margin-top:20px; color: var(--text-secondary);">Loading tasks...</p>
+    </div>
+    <div class="portal-container" id="app" style="display:none; max-width: 900px; margin:auto; padding:20px;">
+        <header class="portal-header">
+            <div class="portal-logo"><i class="fa-solid fa-broom"></i> Housekeeping</div>
+            <div class="guest-welcome">Welcome, <span id="housekeeper-name">Housekeeper</span></div>
+        </header>
+        <section class="portal-card">
+            <h3 class="card-title"><i class="fa-solid fa-list-check"></i> Assigned Tasks</h3>
+            <div id="tasks-list" class="data-table-container"></div>
+        </section>
+        <section class="portal-card">
+            <h3 class="card-title"><i class="fa-solid fa-bed"></i> Rooms Overview</h3>
+            <div id="rooms-overview" class="data-table-container"></div>
+        </section>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabaseClient.js"></script>
+    <script src="dataStore.js"></script>
+    <script src="housekeeping.js"></script>
+</body>
+</html>

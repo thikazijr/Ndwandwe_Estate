@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Housekeeping Login | Ndwandwe Estate</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+        :root {
+            --bg-primary: #0f172a;
+            --bg-card: #1e293b;
+            --accent: #6366f1;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+        }
+        body { background: var(--bg-primary); color: var(--text-primary); font-family: 'Outfit', sans-serif; margin:0; display:flex; align-items:center; justify-content:center; height:100vh; }
+        .login-card { background: var(--bg-card); padding:2rem; border-radius:1.5rem; box-shadow:0 10px 25px rgba(0,0,0,0.3); width:320px; text-align:center; }
+        .login-card h2 { margin-bottom:1rem; color:var(--accent); }
+        .login-card button { background: var(--accent); color:#fff; border:none; padding:.75rem 1.5rem; border-radius:.75rem; cursor:pointer; font-weight:600; }
+        .login-card button:disabled { opacity:.6; cursor:not-allowed; }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <h2>Housekeeper Access</h2>
+        <p id="status">Verifying login...</p>
+        <button id="proceedBtn" style="display:none;">Enter Portal</button>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabaseClient.js"></script>
+    <script src="dataStore.js"></script>
+    <script>
+        (async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get('token');
+            const statusEl = document.getElementById('status');
+            const btn = document.getElementById('proceedBtn');
+            if (!token) {
+                statusEl.textContent = 'Missing token – please scan your QR code.';
+                return;
+            }
+            try {
+                const hk = await DataStore.getHousekeeperByToken(token);
+                if (!hk) throw new Error('Invalid token');
+                // Store token for later pages
+                sessionStorage.setItem('housekeeper_token', token);
+                sessionStorage.setItem('housekeeper_id', hk.id);
+                statusEl.textContent = `Welcome, ${hk.name || 'Housekeeper'}!`;
+                btn.style.display = 'inline-block';
+                btn.onclick = () => { window.location.href = 'housekeeping.html'; };
+            } catch (e) {
+                console.error(e);
+                statusEl.textContent = 'Login failed – contact reception.';
+            }
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ndwandwe Estate | Management System</title>
+    <link rel="stylesheet" href="styles.css?v=1.1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Beautiful Splash Screen -->
+    <div id="splash-screen" class="splash-screen">
+        <div class="splash-content">
+            <div class="splash-logo">
+                <i class="fa-solid fa-hotel"></i>
+            </div>
+            <div class="splash-title-container">
+                <h1 class="splash-title">Ndwandwe Estate</h1>
+                <p class="splash-subtitle">LUXURY GUESTHOUSE PORTAL</p>
+            </div>
+            <div class="splash-loading-wrapper">
+                <div class="splash-loading-ring"></div>
+                <div class="splash-loading-glow"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login View -->
+    <div id="login-view" class="login-body">
+        <div class="login-container fade-in">
+            <div class="login-header">
+                <div class="logo-icon login-logo-icon"><i class="fa-solid fa-hotel"></i></div>
+                <h1>Ndwandwe Estate</h1>
+                <p>Welcome back! Please login to your account.</p>
+            </div>
+
+            <form id="login-form" class="login-form">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" id="email" class="form-control" placeholder="admin@ndwandwe.com" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-with-icon password-group">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+                        <button type="button" id="toggle-password" class="password-toggle-btn">
+                            <i class="fa-solid fa-eye" id="eye-icon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-options">
+                    <a href="#" id="btn-forgot-password" class="forgot-password">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block login-btn">
+                    Login <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- App View -->
+    <div id="app-view" class="app-container" style="display: none;">
+        <div id="sidebar-overlay" class="sidebar-overlay"></div>
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon"><i class="fa-solid fa-hotel"></i></div>
+                <span>Ndwandwe Estate</span>
+            </div>
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-view="dashboard">
+                    <i class="fa-solid fa-chart-pie"></i> Dashboard
+                </a>
+                <a href="#" class="nav-item" data-view="guests">
+                    <i class="fa-solid fa-users"></i> Guests
+                </a>
+                <a href="#" class="nav-item" data-view="bookings">
+                    <i class="fa-solid fa-calendar-check"></i> Bookings
+                </a>
+                <a href="#" class="nav-item" data-view="rooms">
+                    <i class="fa-solid fa-bed"></i> Rooms
+                </a>
+                <a href="#" class="nav-item" data-view="calendar">
+                    <i class="fa-solid fa-calendar-days"></i> Calendar
+                </a>
+
+                <a href="#" class="nav-item" data-view="housekeeping">
+                    <i class="fa-solid fa-broom"></i> Housekeeping
+                </a>
+                <a href="#" class="nav-item" data-view="invoices">
+                    <i class="fa-solid fa-file-invoice"></i> Invoices
+                </a>
+                <a href="#" class="nav-item" data-view="performance">
+                    <i class="fa-solid fa-chart-line"></i> Performance
+                </a>
+                <a href="#" class="nav-item" data-view="logs" id="nav-logs">
+                    <i class="fa-solid fa-list-check"></i> System Logs
+                </a>
+                <a href="#" class="nav-item" data-view="messages" id="nav-messages">
+                    <i class="fa-solid fa-comments"></i> Messages
+                </a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-title">
+                    <button id="mobile-menu-toggle" class="btn-icon mobile-menu-toggle">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <h1 id="page-title">Dashboard</h1>
+                </div>
+                <div class="header-actions">
+                    <div class="notifications-container dropdown-trigger" tabindex="0">
+                        <div class="notification-bell">
+                            <i class="fa-solid fa-bell"></i>
+                            <span class="notification-badge hidden" id="notification-count">0</span>
+                        </div>
+                        <div class="dropdown-menu notification-dropdown">
+                            <div class="dropdown-header">
+                                <span>Notifications</span>
+                                <button class="btn-text" id="btn-clear-notifications">Mark all read</button>
+                            </div>
+                            <div id="notifications-list" class="notifications-list">
+                                <div class="empty-state">No new notifications</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="user-profile dropdown-trigger" tabindex="0">
+                        <div class="avatar">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <span>Admin</span>
+                        <i class="fa-solid fa-chevron-down" style="font-size: 0.8rem; margin-left: 5px;"></i>
+                        <div class="dropdown-menu">
+                            <a href="#" id="btn-logout" class="dropdown-item text-danger">
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div id="view-container" class="view-container">
+                <!-- Content injected here -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Templates -->
+    <template id="tpl-dashboard">
+        <div class="dashboard-overview fade-in">
+            <div class="view-actions" style="justify-content: flex-end; margin-bottom: 20px;">
+                <button class="btn btn-primary" id="btn-quick-book" style="background: linear-gradient(135deg, #6366f1, #3ecfcf); border: none;">
+                    <i class="fa-solid fa-bolt"></i> Quick Book
+                </button>
+            </div>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-icon green"><i class="fa-solid fa-bed"></i></div>
+                    <div class="metric-info">
+                        <h3>Occupied</h3>
+                        <p id="metric-occupied-rooms">0</p>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon purple"><i class="fa-solid fa-calendar-check"></i></div>
+                    <div class="metric-info">
+                        <h3>Active Bookings</h3>
+                        <p id="metric-active-bookings">0</p>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon blue"><i class="fa-solid fa-circle-check"></i></div>
+                    <div class="metric-info">
+                        <h3>Ready to Book</h3>
+                        <p id="metric-ready-rooms">0</p>
+                    </div>
+                </div>
+            </div>
+            <div class="recent-activity card">
+                <div class="card-header">
+                    <h2>Recent Bookings</h2>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Guest</th>
+                                <th>Room</th>
+                                <th>Check-in</th>
+                                <th>Check-out</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dashboard-recent-bookings">
+                            <!-- Injected rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="tpl-rooms">
+        <div class="rooms-view fade-in">
+            <div class="view-actions">
+                <button class="btn btn-primary" id="btn-add-room">
+                    <i class="fa-solid fa-plus"></i> Add Room
+                </button>
+            </div>
+            <div class="rooms-grid" id="rooms-grid">
+                <!-- Injected room cards -->
+            </div>
+        </div>
+    </template>
+
+    <template id="tpl-bookings">
+        <div class="bookings-view fade-in">
+            <div class="view-actions">
+                <button class="btn btn-primary" id="btn-new-booking">
+                    <i class="fa-solid fa-plus"></i> New Booking
+                </button>
+                <div class="search-box">
+                    <i class="fa-solid fa-search"></i>
+                    <input type="text" id="view-search" placeholder="Search bookings..." class="form-control">
+                </div>
+            </div>
+            <div class="card">
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Guest Name</th>
+                                <th>Room</th>
+                                <th>Check-in</th>
+                                <th>Check-out</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookings-list">
+                            <!-- Injected rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="tpl-guests">
+        <div class="guests-view fade-in">
+            <div class="view-actions">
+                <button class="btn btn-primary" id="btn-new-guest">
+                    <i class="fa-solid fa-plus"></i> Add Guest
+                </button>
+                <div class="search-box">
+                    <i class="fa-solid fa-search"></i>
+                    <input type="text" id="view-search" placeholder="Search guests..." class="form-control">
+                </div>
+            </div>
+            <div class="card">
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Contact</th>
+                                <th>Room</th>
+                                <th>ID/Passport</th>
+                                <th>Car Plate</th>
+                                <th>Location</th>
+                                <th>Notes</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="guests-list">
+                            <!-- Injected rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="tpl-performance">
+        <div class="performance-view fade-in">
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-icon purple"><i class="fa-solid fa-chart-pie"></i></div>
+                    <div class="metric-info">
+                        <h3>Occupancy Rate</h3>
+                        <p id="perf-occupancy">0%</p>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon green"><i class="fa-solid fa-coins"></i></div>
+                    <div class="metric-info">
+                        <h3>Est. Daily Revenue</h3>
+                        <p id="perf-revenue">E0</p>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon blue"><i class="fa-solid fa-book-open"></i></div>
+                    <div class="metric-info">
+                        <h3>Total Lifetime Bookings</h3>
+                        <p id="perf-total-bookings">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="performance-details">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Room Status Breakdown</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="progress-group">
+                            <div class="progress-label">
+                                <span>Occupied</span>
+                                <span id="perf-occupied-count">0</span>
+                            </div>
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar bg-danger" id="perf-occupied-bar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="progress-group">
+                            <div class="progress-label">
+                                <span>Available</span>
+                                <span id="perf-available-count">0</span>
+                            </div>
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar bg-success" id="perf-available-bar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="progress-group">
+                            <div class="progress-label">
+                                <span>Maintenance</span>
+                                <span id="perf-maintenance-count">0</span>
+                            </div>
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar bg-warning" id="perf-maintenance-bar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="tpl-calendar">
+        <div class="calendar-view fade-in">
+            <div class="view-actions">
+                <div class="calendar-controls"
+                    style="display:flex; align-items:center; background:var(--bg-secondary); padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border-color);">
+                    <button class="btn btn-secondary btn-small" id="btn-prev-week"><i
+                            class="fa-solid fa-chevron-left"></i></button>
+                    <span id="calendar-date-range"
+                        style="font-weight: 600; margin: 0 1.5rem; color: var(--text-primary);"></span>
+                    <button class="btn btn-secondary btn-small" id="btn-next-week"><i
+                            class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+            <div class="card calendar-container">
+                <div class="calendar-grid-wrapper" style="overflow-x: auto;">
+                    <div class="calendar-grid" id="calendar-grid">
+                        <!-- Injected calendar grid -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="tpl-housekeeping">
+        <div class="housekeeping-view fade-in">
+            <div class="card" style="margin-bottom: 2rem;">
+                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2><i class="fa-solid fa-users"></i> Housekeepers</h2>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="housekeepers-list">
+                            <!-- Injected rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-bed"></i> Room Status</h2>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Room Number</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Cleanliness</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="housekeeping-list">
+                            <!-- Injected rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="tpl-invoices">
+        <div class="invoicing-view fade-in">
+            <div class="view-header-actions" style="margin-bottom: 2rem;">
+                <button id="btn-export-financials" class="btn btn-primary">
+                    <i class="fa-solid fa-file-excel"></i> Export Financial Report (CSV)
+                </button>
+            </div>
+            <div class="card">
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Invoice ID</th>
+                                <th>Date</th>
+                                <th>Guest Name</th>
+                                <th>Room</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="invoices-list">
+                            <!-- Injected rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </template>
+
+
+    <template id="tpl-messages">
+        <div class="messages-view fade-in">
+            <div class="view-header-actions" style="margin-bottom: 2rem;">
+                <button id="btn-new-staff-msg" class="btn btn-primary">
+                    <i class="fa-solid fa-paper-plane"></i> Send Staff Message
+                </button>
+            </div>
+            <div id="messages-full-list" class="messages-full-list">
+                <!-- Messages cards injected here -->
+            </div>
+        </div>
+    </template>
+
+
+    <template id="tpl-logs">
+        <div class="logs-view fade-in">
+            <div class="card">
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Staff Member</th>
+                                <th>Action</th>
+                                <th>Entity</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody id="logs-list">
+                            <!-- Logs injected here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </template>
+
+
+    <!-- Modal -->
+    <div id="modal-overlay" class="modal-overlay hidden">
+        <div class="modal fade-in" id="modal-container">
+            <div class="modal-header">
+                <h2 id="modal-title">Modal Title</h2>
+                <button class="btn-close" id="btn-close-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Form content -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script src="supabaseClient.js"></script>
+    <script src="dataStore.js"></script>
+    <script src="paymentService.js"></script>
+    <script src="app.js"></script>
+    <script>
+        // Luxurious Splash Screen Intro Controller
+        document.addEventListener('DOMContentLoaded', () => {
+            const splash = document.getElementById('splash-screen');
+            const loginCard = document.querySelector('.login-container');
+
+            if (loginCard) {
+                // Keep it scale down and invisible initially
+                loginCard.style.opacity = '0';
+                loginCard.style.transform = 'translateY(20px) scale(0.95)';
+                loginCard.style.transition = 'opacity 1s cubic-bezier(0.34, 1.56, 0.64, 1), transform 1s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            }
+
+            setTimeout(() => {
+                if (splash) {
+                    splash.classList.add('fade-out');
+                    // Clean up splash from DOM after transition completes to save resources
+                    setTimeout(() => splash.remove(), 800);
+                }
+
+                if (loginCard) {
+                    // Smoothly slide in and spring scale up the login card
+                    loginCard.style.opacity = '1';
+                    loginCard.style.transform = 'translateY(0) scale(1)';
+                }
+            }, 2500); // 2.5 seconds showcase
+        });
+    </script>
+</body>
+
+</html>
